@@ -31,7 +31,7 @@ Based on the official QPay API v2 Postman collection provided, here's a comprehe
     "invoice_description": "Shopify Order #123",
     "sender_branch_code": "ONLINE",
     "amount": 25000,
-    "callback_url": "https://your-domain.vercel.app/api/webhook/qpay"
+    "callback_url": "https://your-app.onrender.com/api/webhook/qpay"
 }
 ```
 
@@ -167,7 +167,7 @@ const createInvoice = async (orderData) => {
         invoice_description: `Shopify Order #${orderData.order_number}`,
         sender_branch_code: 'ONLINE',
         amount: Math.round(orderData.total_price * 100), // Convert to MNT cents
-        callback_url: `${process.env.VERCEL_URL}/api/webhook/qpay`,
+        callback_url: `${process.env.RENDER_EXTERNAL_URL}/api/webhook/qpay`,
         sender_staff_code: 'online',
         invoice_receiver_data: {
             name: `${orderData.customer.first_name} ${orderData.customer.last_name}`,

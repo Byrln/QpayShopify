@@ -43,7 +43,7 @@ async function testQPayCredentials() {
       invoice_receiver_code: 'TEST_ORDER_001',
       invoice_description: 'Test payment for QPay integration',
       amount: 1000,
-      callback_url: 'https://your-domain.vercel.app/api/webhook'
+      callback_url: 'https://your-app.onrender.com/api/webhook'
     };
     
     const invoiceResult = await qpayClient.createInvoice(invoiceData);
@@ -83,7 +83,7 @@ async function testQPayCredentials() {
       console.log('\n📝 Next Steps:');
       console.log('   1. Configure your Shopify credentials in .env');
       console.log('   2. Set up your database connection (Neon PostgreSQL)');
-      console.log('   3. Deploy to Vercel with proper environment variables');
+      console.log('   3. Deploy to Render.com with proper environment variables');
       console.log('   4. Configure webhook URL in QPay merchant dashboard');
     } else {
       console.log('\n⚠️ Please check your QPay credentials and try again.');

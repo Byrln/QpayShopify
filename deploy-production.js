@@ -15,7 +15,7 @@ function checkPrerequisites() {
   const requiredFiles = [
     '.env',
     'package.json',
-    'vercel.json',
+    'render.yaml',
     'prisma/schema.prisma'
   ];
   
@@ -92,26 +92,19 @@ function generatePrismaClient() {
   }
 }
 
-// Deploy to Vercel
-function deployToVercel() {
-  console.log('\n🚀 Deploying to Vercel...');
+// Deploy to Render.com
+function deployToRender() {
+  console.log('\n🚀 Preparing for Render.com deployment...');
   
-  try {
-    // Check if vercel is installed
-    execSync('vercel --version', { stdio: 'pipe' });
-  } catch (error) {
-    console.log('❌ Vercel CLI not found. Installing...');
-    execSync('npm install -g vercel', { stdio: 'inherit' });
-  }
+  console.log('\n📋 Deployment Instructions:');
+  console.log('1. Push your code to GitHub repository');
+  console.log('2. Go to https://render.com and create a new Web Service');
+  console.log('3. Connect your GitHub repository');
+  console.log('4. Render will automatically detect render.yaml configuration');
+  console.log('5. Add environment variables in Render dashboard');
+  console.log('6. Deploy and get your static IP address');
   
-  try {
-    console.log('🔄 Starting deployment...');
-    execSync('vercel --prod', { stdio: 'inherit' });
-    console.log('✅ Deployment completed');
-  } catch (error) {
-    console.log('❌ Deployment failed:', error.message);
-    process.exit(1);
-  }
+  console.log('\n✅ Project is ready for Render.com deployment!');
 }
 
 // Main deployment process
@@ -127,12 +120,12 @@ async function deploy() {
     }
     
     generatePrismaClient();
-    deployToVercel();
+    deployToRender();
     
     console.log('\n🎉 Deployment Process Completed!');
     console.log('==================================');
     console.log('\n📋 Next Steps:');
-    console.log('1. Set environment variables in Vercel dashboard');
+    console.log('1. Set environment variables in Render dashboard');
     console.log('2. Configure Shopify app URLs');
     console.log('3. Test production endpoints');
     console.log('4. Monitor deployment logs');
