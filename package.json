@@ -5,10 +5,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
-    "start": "npx prisma generate || echo 'Prisma already generated' && node server.js",
+    "start": "npx prisma generate && node server.js",
     "test:server": "node test-server.js",
     "test:api": "node test-api.js",
-    "build": "echo 'Build completed successfully'",
+    "build": "npx prisma generate",
     "test": "jest",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
