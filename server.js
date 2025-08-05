@@ -197,6 +197,136 @@ app.post('/api/create-invoice', async (req, res) => {
 });
 
 // Webhook endpoint
+// Shopify order creation webhook
+app.all('/api/webhook/orders/create', async (req, res) => {
+  try {
+    // Handle OPTIONS request for CORS
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
+    // Handle GET request for testing
+    if (req.method === 'GET') {
+      return res.json({ 
+        status: 'OK', 
+        message: 'Shopify order creation webhook endpoint is active',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Handle POST request for actual webhook
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    console.log('📦 Shopify order webhook received:', req.body);
+    
+    const order = req.body;
+    
+    // Validate order data
+    if (!order || !order.id) {
+      return res.status(400).json({ error: 'Invalid order data' });
+    }
+
+    // Create QPay invoice for the order
+    const invoiceData = {
+      invoice_code: process.env.QPAY_INVOICE_CODE,
+      sender_invoice_no: `SHOPIFY-${order.id}`,
+      invoice_receiver_code: order.billing_address?.phone || order.phone || 'CUSTOMER',
+      invoice_description: `Shopify Order #${order.order_number || order.id}`,
+      amount: parseFloat(order.total_price || order.current_total_price || 0),
+      callback_url: `${process.env.RENDER_EXTERNAL_URL || req.protocol + '://' + req.get('host')}/api/webhook/qpay`
+    };
+
+    console.log('💰 Creating QPay invoice:', invoiceData);
+    
+    const qpayResponse = await qpayClient.createInvoice(invoiceData);
+    
+    if (qpayResponse.success) {
+      // Store order and invoice relationship
+      await dbClient.storeOrder({
+        shopify_order_id: order.id,
+        qpay_invoice_id: qpayResponse.invoice_id,
+        amount: invoiceData.amount,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      });
+      
+      console.log('✅ QPay invoice created successfully:', qpayResponse.invoice_id);
+      res.json({ success: true, invoice_id: qpayResponse.invoice_id });
+    } else {
+      console.error('❌ Failed to create QPay invoice:', qpayResponse.error);
+      res.status(500).json({ error: 'Failed to create payment invoice' });
+    }
+    
+  } catch (error) {
+    console.error('❌ Shopify webhook error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// QPay payment confirmation webhook
+app.all('/api/webhook/qpay', async (req, res) => {
+  try {
+    // Handle OPTIONS request for CORS
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
+    // Handle GET request for testing
+    if (req.method === 'GET') {
+      return res.json({ 
+        status: 'OK', 
+        message: 'QPay payment confirmation webhook endpoint is active',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Handle POST request for actual webhook
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    console.log('💳 QPay webhook received:', req.body);
+    
+    const payment = req.body;
+    
+    // Validate payment data
+    if (!payment || !payment.invoice_id) {
+      return res.status(400).json({ error: 'Invalid payment data' });
+    }
+
+    // Update order status based on payment
+    const orderData = await dbClient.getOrderByInvoiceId(payment.invoice_id);
+    
+    if (orderData) {
+      // Update order status
+      await dbClient.updateOrderStatus(orderData.shopify_order_id, {
+        status: payment.payment_status === 'PAID' ? 'paid' : 'failed',
+        qpay_payment_id: payment.payment_id,
+        updated_at: new Date().toISOString()
+      });
+      
+      // Update Shopify order if payment is successful
+      if (payment.payment_status === 'PAID') {
+        await shopifyClient.fulfillOrder(orderData.shopify_order_id);
+        console.log('✅ Order fulfilled in Shopify:', orderData.shopify_order_id);
+      }
+      
+      console.log('✅ Payment processed successfully:', payment.invoice_id);
+      res.json({ success: true, message: 'Payment processed' });
+    } else {
+      console.error('❌ Order not found for invoice:', payment.invoice_id);
+      res.status(404).json({ error: 'Order not found' });
+    }
+    
+  } catch (error) {
+    console.error('❌ QPay webhook error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Legacy webhook endpoint (keep for backward compatibility)
 app.post('/api/webhook', async (req, res) => {
   try {
     console.log('🔔 Received QPay webhook:', req.body);

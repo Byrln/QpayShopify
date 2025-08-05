@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: qpay-shopify-webhook
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: /api/$1
