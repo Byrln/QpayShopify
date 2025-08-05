@@ -3,12 +3,32 @@ services:
     name: qpay-shopify-webhook
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install && npx prisma generate
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
         value: production
-    routes:
-      - type: rewrite
-        source: /api/*
-        destination: /api/$1
+      - key: DATABASE_URL
+        sync: false
+      - key: QPAY_USERNAME
+        sync: false
+      - key: QPAY_PASSWORD
+        sync: false
+      - key: QPAY_INVOICE_CODE
+        sync: false
+      - key: QPAY_API_URL
+        value: https://merchant.qpay.mn/v2
+      - key: SHOPIFY_SHOP_DOMAIN
+        sync: false
+      - key: SHOPIFY_ACCESS_TOKEN
+        sync: false
+      - key: SHOPIFY_API_VERSION
+        value: 2023-10
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+      - key: PORT
+        value: 3000
