@@ -17,7 +17,7 @@ model OrderPayment {
   qpayInvoiceId  String    @unique
   amount         Decimal   @db.Decimal(10, 2)
   currency       String    @default("MNT")
-  status         String    @default("pending") // pending, paid, failed, expired
+  status         String    @default("pending")
   customerEmail  String?
   customerPhone  String?
   qrText         String?
