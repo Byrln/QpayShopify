@@ -85,6 +85,141 @@ app.get('/', (req, res) => {
   });
 });
 
+// Shopify Webhook endpoints
+app.post('/webhooks/shopify/orders/create', async (req, res) => {
+  try {
+    console.log('📦 Shopify Order Created Webhook received');
+    
+    // Verify Shopify webhook signature
+    const hmac = req.get('X-Shopify-Hmac-Sha256');
+    const webhookSecret = process.env.SHOPIFY_WEBHOOK_SECRET;
+    
+    if (webhookSecret && hmac) {
+      const crypto = require('crypto');
+      const body = JSON.stringify(req.body);
+      const calculatedHmac = crypto
+        .createHmac('sha256', webhookSecret)
+        .update(body, 'utf8')
+        .digest('base64');
+      
+      if (calculatedHmac !== hmac) {
+        console.log('❌ Invalid Shopify webhook signature');
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+    }
+    
+    const order = req.body;
+    console.log('📦 New Shopify Order:', {
+      id: order.id,
+      order_number: order.order_number,
+      total_price: order.total_price,
+      currency: order.currency,
+      customer: order.customer?.email
+    });
+    
+    // Create QPay invoice for the order
+    if (qpayClient) {
+      try {
+        const invoiceData = {
+          orderId: order.id.toString(),
+          amount: parseFloat(order.total_price),
+          currency: order.currency,
+          customerEmail: order.customer?.email,
+          customerPhone: order.customer?.phone,
+          orderNumber: order.order_number
+        };
+        
+        const invoice = await qpayClient.createInvoice(invoiceData);
+        console.log('✅ QPay invoice created for Shopify order:', invoice.invoice_id);
+        
+        // Store the invoice mapping
+        if (dbClient) {
+          await dbClient.createOrderPayment({
+            shopifyOrderId: order.id.toString(),
+            orderNumber: order.name || order.order_number,
+            qpayInvoiceId: invoice.invoice_id,
+            amount: parseFloat(order.total_price).toString(),
+            currency: order.currency,
+            customerEmail: order.customer?.email,
+            customerPhone: order.customer?.phone,
+            qrText: invoice.qr_text,
+            qrImage: invoice.qr_image
+          });
+        }
+      } catch (error) {
+        console.error('❌ Failed to create QPay invoice for Shopify order:', error.message);
+      }
+    }
+    
+    res.status(200).json({ received: true });
+  } catch (error) {
+    console.error('❌ Shopify order webhook error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/webhooks/shopify/orders/updated', async (req, res) => {
+  try {
+    console.log('📝 Shopify Order Updated Webhook received');
+    const order = req.body;
+    console.log('📝 Updated Shopify Order:', {
+      id: order.id,
+      order_number: order.order_number,
+      financial_status: order.financial_status,
+      fulfillment_status: order.fulfillment_status
+    });
+    res.status(200).json({ received: true });
+  } catch (error) {
+    console.error('❌ Shopify order updated webhook error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/webhooks/shopify/orders/paid', async (req, res) => {
+  try {
+    console.log('💰 Shopify Order Paid Webhook received');
+    const order = req.body;
+    console.log('💰 Paid Shopify Order:', {
+      id: order.id,
+      order_number: order.order_number,
+      total_price: order.total_price
+    });
+    res.status(200).json({ received: true });
+  } catch (error) {
+    console.error('❌ Shopify order paid webhook error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/webhooks/shopify/orders/cancelled', async (req, res) => {
+  try {
+    console.log('❌ Shopify Order Cancelled Webhook received');
+    const order = req.body;
+    console.log('❌ Cancelled Shopify Order:', {
+      id: order.id,
+      order_number: order.order_number,
+      cancelled_at: order.cancelled_at
+    });
+    res.status(200).json({ received: true });
+  } catch (error) {
+    console.error('❌ Shopify order cancelled webhook error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Generic Shopify webhook endpoint
+app.post('/webhooks/shopify', async (req, res) => {
+  try {
+    console.log('🔔 Generic Shopify Webhook received');
+    const topic = req.get('X-Shopify-Topic');
+    console.log('📋 Webhook Topic:', topic);
+    res.status(200).json({ received: true, topic });
+  } catch (error) {
+    console.error('❌ Generic Shopify webhook error:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Create Invoice endpoint
 app.post('/api/create-invoice', async (req, res) => {
   try {
