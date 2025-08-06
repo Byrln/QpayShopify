@@ -24,6 +24,8 @@ services:
         sync: false
       - key: SHOPIFY_API_VERSION
         value: 2023-10
+      - key: QPAY_WEBHOOK_SECRET
+        sync: false
       - key: WEBHOOK_SECRET
         sync: false
       - key: JWT_SECRET

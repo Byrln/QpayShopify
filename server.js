@@ -5,6 +5,7 @@ const path = require('path');
 const QPayClient = require('./lib/qpay');
 const ShopifyClient = require('./lib/shopify');
 const DatabaseClient = require('./lib/database');
+const { qpaySecurityMiddleware } = require('./middleware/qpay-security');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -266,7 +267,7 @@ app.all('/api/webhook/orders/create', async (req, res) => {
 });
 
 // QPay payment confirmation webhook
-app.all('/api/webhook/qpay', async (req, res) => {
+app.all('/api/webhook/qpay', qpaySecurityMiddleware, async (req, res) => {
   try {
     // Handle OPTIONS request for CORS
     if (req.method === 'OPTIONS') {
@@ -327,7 +328,7 @@ app.all('/api/webhook/qpay', async (req, res) => {
 });
 
 // Legacy webhook endpoint (keep for backward compatibility)
-app.post('/api/webhook', async (req, res) => {
+app.post('/api/webhook', qpaySecurityMiddleware, async (req, res) => {
   try {
     console.log('🔔 Received QPay webhook:', req.body);
     
