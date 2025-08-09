@@ -1,0 +1,96 @@
+,,,,,,,,
+,Төлбөрийн жагсаалтыг авахад ашиглана,,,,,,,
+,,,,,,,,
+,Request,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,object_type,Yes,[.*]/string,45,"Обьектын төрөл
+MERCHANT: Байгууллага
+INVOICE: Нэхэмжлэх
+QR: QR код",MERCHANT,
+,2,object_id,Yes,[.*]/string,45,"Обьектын ID
+Нэхэмлэхийн код(invoice_code)
+",TEST_INVOICE,
+,3,start_date,Yes,date,45,Гүйлгээ эхлэх цаг,9/6/21 0:00,
+,4,end_date,Yes,date,45,Гүйлгээ дуусах цаг,9/6/21 23:59,
+,5,offset,Yes,object,,," {
+""page_number"": 1,
+""page_limit"" : 100
+}",
+,,,,,,,,
+,offset,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,page_number,Yes,decimal,min1-max100,Хуудасны тоо,1,
+,2,page_limit,Yes,decimal,min1-max100,Хуудасны хязгаар,100,
+,,,,,,,,
+,,,,,,,,
+,Response,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,payment_id,,string,,QPay-ээс үүссэн гүйлгээний дугаар,12f94137-66fd-4d90-b2b2-8225c1b4ed2d,
+,2,payment_date,,date,,Гүйлгээний огноо,2020-10-19T08:58:46.641Z,
+,3,payment_status,,string,,"Гүйлгээ төлөв
+NEW: Гүйлгээ үүсгэгдсэн
+FAILED: Гүйлгээ амжилтгүй
+PAID: Төлөгдсөн
+REFUNDED: Гүйлгээ буцаагдсан",PAID,
+,4,payment_fee,,decimal,,Шимтгэлийн дүн,10,
+,5,payment_amount,,decimal,,Гүйлгээний үнийн дүн,1000,
+,6,payment_currency,,MNT,,Гүйлгээний валют,MNT,
+,7,payment_wallet,,string,,Гүйлгээ хийсэн воллетийн дугаар,0fc9b71c-cd87-4ffd-9cac-2279ebd9deb0,
+,8,payment_name,,string,,Төлбөрийн нэр,Юнивишн,
+,9,payment_description,,string,,Гүйлгээний утга,Юнивишн төлбөр,
+,10,qr_code,,string,,Гүйлгээнд ашиглагдсан QR код,000201010211152527940496279404962005110165204541153034965802MN59092005110166011ULAANBAATAR621407102005-1101663040D47,
+,11,paid_by,,string,,"Гүйлгээний төрөл
+P2P: Дансны гүйлгээ
+CARD: Картын гүйлгээ",CARD,
+,12,object_type,,string,,"Обьектын төрөл
+MERCHANT: Байгууллага
+INVOICE: Нэхэмжлэх
+QR: QR код",INVOICE,
+,13,object_id,,string,,"Обьектын ID
+Обьектын төрөл INVOICE үед Нэхэмлэхийн код(invoice_code)
+Обьектын төрөл QR үед QR код",00f94137-66fd-4d90-b2b2-8225c1b4ed2d,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Request,,,,,,,Request cURL
+,"{
+""object_type"":""INVOICE"",
+""object_id"":""TEST_INVOICE"",
+""start_date"": ""2021-09-06 00:00:01"",
+""end_date"": ""2021-09-06 23:59:59"",
+""offset"" : {
+""page_number"": 1,
+""page_limit"" : 100
+}
+}",,,,,,,"curl --location --request POST 'https://merchant.qpay.mn/v2/payment/list' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Cookie: qpay_merchant_service.sid=s%3AlJD1O3i8U-GSSPZ56x0S6-xRjfhs9GoQ.cAS7vyr3mTBQmTLEy%2BAvCkfHzNDIwQLvlRzqLTqikZk; _4d45d=http://10.233.105.241:3000' \
+--data-raw '{
+""object_type"":""INVOICE"",
+""object_id"":""TEST_INVOICE"",
+""start_date"": ""2021-09-06 00:00:01"",
+""end_date"": ""2021-09-06 23:59:59"",
+""offset"" : {
+""page_number"": 1,
+""page_limit"" : 100
+}
+}'"
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Response,,,,,,,
+,"{
+    ""count"": 0,
+    ""rows"": []
+}",,,,,,,

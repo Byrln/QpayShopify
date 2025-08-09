@@ -1,0 +1,224 @@
+,,,,,,,,
+,Үүссэн invoice_id-аар гүйлгээ хийгдсэн мэдээлэл авахад ашиглана,,,,,,,
+,АНХААРУУЛГА! Cron Job ашиглан гүйлгээ байнга шалгахыг хориглоно. Зөвхөн Callback URL ашиглана уу.,,,,,,,
+,,,,,,,,
+,Request,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,object_type,Yes,[.*]/string,50,"Обьектын төрөл
+INVOICE: Нэхэмжлэх
+QR: QR код
+ITEM: Бүтээгдэхүүн",INVOICE,
+,2,object_id,Yes,[.*]/string,30,"Обьектын ID
+Нэхэмжлэх үүсгэхэд Response-д орж ирсэн Invoice ID",d50f49f2-9032-4a74-8929-530531f28f63,
+,3,offset,No,object,,object,"{
+	    ""page_number"": 1,
+	    ""page_limit"" : 100
+	  }",
+,,,,,,,,
+,offset,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,page_number,Yes,decimal,min1-max100,Хуудасны тоо,1,
+,2,page_limit,Yes,decimal,min1-max100,Хуудасны хязгаар,100,
+,,,,,,,,
+,Response,,,,,,,
+,Д/д,Нэр,,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,count,,decimal,20,Нийт гүйлгээний мөрийн тоо,1,
+,2,paid_amount,,decimal,20,Гүйлгээний дүн,100,
+,3,rows,,array,,Гүйлгээний мөр,,
+,,,,,,,,
+,rows[],,,,,,,
+,Д/д,Нэр,,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,payment_id,,decimal,30,QPay-ээс үүссэн гүйлгээний дугаар,"493622150113497, 8e25b4d5-fe5a-4d0f-b050-def68a82aaad",
+,2,payment_status,,[.*]/string,50,"Гүйлгээ төлөв
+NEW: Гүйлгээ үүсгэгдсэн
+FAILED: Гүйлгээ амжилтгүй
+PAID: Төлөгдсөн
+PARTIAL: Дутуу төлөгдсөн
+REFUNDED: Гүйлгээ буцаагдсан",PAID,
+,3,payment_amount,,decimal,20,Гүйлгээний нийт дүн,100.00,
+,4,trx_fee,,decimal,20,Гүйлгээний шимтгэлийн дүн,0.00,
+,5,payment_currency,,valid,10,Гүйлгээний валют,MNT,
+,6,payment_wallet,,[.*]/string,50,"Гүйлгээ хийгдэн воллет, апп",Хаан банк апп,
+,7,payment_type,,[.*]/string,50,"Гүйлгээний төрөл
+P2P: Дансны гүйлгээ
+CARD: Картын гүйлгээ",P2P,
+,8,next_payment_date,,date,,Subscription payment холболт хийгдсэн үед ажиллана,null,
+,9,next_payment_datetime,,date,,Subscription payment холболт хийгдсэн үед ажиллана,null,
+,10,card_tansactions,,array,,Wallet буюу картын гүйлгээ хүлээн авах үед ирнэ,"  {
+                    ""card_type"": ""UNIONPAY"",
+                    ""is_cross_border"": false,
+                    ""amount"": ""100.00"",
+                    ""currency"": ""MNT"",
+                    ""date"": ""2022-03-11T06:23:48.586Z"",
+                    ""status"": ""SUCCESS"",
+                    ""settlement_status"": ""PENDING"",
+                    ""settlement_status_date"": ""2022-03-11T06:23:48.587Z""
+                }",
+,11,p2p_transactions,,array,,Дансны буюу банкны апп-аар гүйлгээ хүлээн авах үед ирнэ," {
+                    ""transaction_bank_code"": ""050000"",
+                    ""account_bank_code"": ""050000"",
+                    ""account_bank_name"": ""Хаан банк"",
+                    ""account_number"": ""50*******"",
+                    ""status"": ""SUCCESS"",
+                    ""amount"": ""99.00"",
+                    ""currency"": ""MNT"",
+                    ""settlement_status"": ""SETTLED""
+                }",
+,,,,,,,,
+,,,,,,,,
+,card_tansactions [],,,,,,,
+,Д/д,Нэр,,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,card_type,,[.*]/string,50,Картын төрөл,UNIONPAY,
+,2,is_cross_border,,boolean,20,"Гадаад гүйлгээ зөвшөөрсөн эсэх
+true: Зөвшөөрсөн
+false: зөвшөөрөөгүй",false,
+,3,amount,,decimal,20,Төлбөр төлсөн үнийн дүн,100.00,
+,4,currency,,[.*]/string,10,Валют,MNT,
+,5,date,,date,,Гүйлгээ хийгдсэн хугацаа,2022-03-11T06:23:48.586Z,
+,6,status,,[.*]/string,50,Статус,SUCCESS,
+,7,settlement_status,,[.*]/string,50,Картын гүйлгээний хаалт хийгдсэн эсэх статус,PENDING,
+,8,settlement_status_date,,date,,Картын гүйлгээ бичигдсэн хугацаа,2022-03-11T06:23:48.587Z,
+,,,,,,,,
+,,,,,,,,
+,p2p_transactions [],,,,,,,
+,Д/д,Нэр,,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,transaction_bank_code,,[.*]/string,50,Гүйлгээг эхлүүлэгч банкны код,50000,
+,2,account_bank_code,,[.*]/string,50,Төлбөр хүлээн авагч банкны код,050000,
+,3,account_bank_name,,decimal,50,Төлбөр хүлээн авагч банкны нэр,Хаан банк,
+,4,account_number,,[.*]/string,50,Төлбөр хүлээн авагч дансны дугаар,50*******,
+,5,status,,[.*]/string,20,Статус,SUCCESS,
+,6,amount,,[.*]/string,20,Дансанд орсон төлбөрийн дүн,99.00,
+,7,currency,,[.*]/string,10,Дансанд орсон төлбөрийн валют,MNT,
+,8,settlement_status,,[.*]/string,20,Дансны гүйлгээний хаалт хийгдсэн эсэх статус /Realtime/,SETTLED,
+,,,,,,,,
+,Request,,,,,,,Request cURL
+,"{
+	""object_type"": ""INVOICE"",
+	""object_id""  : ""d50f49f2-9032-4a74-8929-530531f28f63"",
+	""offset""     : {
+	    ""page_number"": 1,
+	    ""page_limit"" : 100
+	  }
+}",,,,,,,"curl --location --request POST 'https://merchant.qpay.mn/v2/payment/check' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Cookie: 
+--data-raw '{
+	""object_type"": ""INVOICE"",
+	""object_id""  : ""d50f49f2-9032-4a74-8929-530531f28f63"",
+	""offset""     : {
+	    ""page_number"": 1,
+	    ""page_limit"" : 100
+	  }
+}'"
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Response /Төлбөр төлөгдөөгүй үед/,,,,,,,
+,{,,,,,,,
+,"    ""count"": 0,",,,,,,,
+,"    ""rows"": []",,,,,,,
+,},,,,,,,
+,,,,,,,,
+,Response /P2P гүйлгээ хийгдсэн үед/,,,,,,,
+,"{
+    ""count"": 1,
+    ""paid_amount"": 100,
+    ""rows"": [
+        {
+            ""payment_id"": ""493622150113497"",
+            ""payment_status"": ""PAID"",
+            ""payment_amount"": ""100.00"",
+            ""trx_fee"": ""1.00"",
+            ""payment_currency"": ""MNT"",
+            ""payment_wallet"": ""Хаан банк апп"",
+            ""payment_type"": ""P2P"",
+            ""next_payment_date"": null,
+            ""next_payment_datetime"": null,
+            ""card_transactions"": [],
+            ""p2p_transactions"": [
+                {
+                    ""transaction_bank_code"": ""050000"",
+                    ""account_bank_code"": ""050000"",
+                    ""account_bank_name"": ""Хаан банк"",
+                    ""account_number"": ""50*******"",
+                    ""status"": ""SUCCESS"",
+                    ""amount"": ""99.00"",
+                    ""currency"": ""MNT"",
+                    ""settlement_status"": ""SETTLED""
+                }
+            ]
+        }
+    ]
+}",,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Response /Card-ийн гүйлгээ хийгдсэн үед/,,,,,,,
+,"{
+    ""count"": 1,
+    ""paid_amount"": 100,
+    ""rows"": [
+        {
+            ""payment_id"": ""8e25b4d5-fe5a-4d0f-b050-def68a82aaad"",
+            ""payment_status"": ""PAID"",
+            ""payment_amount"": ""100.00"",
+            ""trx_fee"": ""1.00"",
+            ""payment_currency"": ""MNT"",
+            ""payment_wallet"": ""qPay wallet"",
+            ""payment_type"": ""CARD"",
+            ""next_payment_date"": null,
+            ""next_payment_datetime"": null,
+            ""card_transactions"": [
+                {
+                    ""card_type"": ""UNIONPAY"",
+                    ""is_cross_border"": false,
+                    ""amount"": ""100.00"",
+                    ""currency"": ""MNT"",
+                    ""date"": ""2022-03-11T06:23:48.586Z"",
+                    ""status"": ""SUCCESS"",
+                    ""settlement_status"": ""PENDING"",
+                    ""settlement_status_date"": ""2022-03-11T06:23:48.587Z""
+                }
+            ],
+            ""p2p_transactions"": []
+        }
+    ]
+}",,,,,,,

@@ -1,0 +1,428 @@
+,,,,,,,,
+,Create хэсгийг QPay-ээс үүсгэж өгсөн Invoice code-ийн дагуу дэлгэрэнгүй нэхэмжлэх үүсгэхэд ашиглана.,,,,,,,
+,АНХААРУУЛГА! sender_invoice_no дахин давтагдашгүй байх ёстой ба ижил sender_invoice_no-гоор олон нэхэмжлэх үүсгэж болохгүй,,,,,,,
+,,,,,,,,
+,Request,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,invoice_code,Yes,[.*]/string,45,QPay-ээс үүсгэж өгсөн нэхэмжлэхийн код,TEST_INVOICE,
+,2,sender_invoice_no,Yes,[.*]/string,45,Байгууллагаас үүсгэх давтагдашгүй нэхэмжлэлийн дугаар /тусгай тэмдэгт ашиглаж болохгүй/,12345678,
+,3,sender_branch_code,No,[.*]/string,45,Байгууллагын салбарын код,BRANCH1,
+,4,sender_branch_data,No,object,45,Байгууллагын салбарын мэдээлэл,null,
+,5,sender_staff_data,No,object,45,Байгууллагын ажилтаны мэдээлэл,,
+,5,sender_staff_code,No,[.*]/string,100,Байгууллагын ажилтаны давтагдашгүй код,online,
+,6,invoice_receiver_code,Yes,[.*]/string,45,Байгууллагын нэхэмжлэхийг хүлээн авч буй харилцагчийн дахин давтагдашгүй дугаар,83,
+,7,invoice_receiver_data,Yes,object,,Нэхэмжлэх хүлээн авагчийн мэдээлэл /Хэрэгэлэгчийн мэдээлэл байдаг байх боломжит талбарыг бөглөх/,"   {					
+    ""register"":""UZ96021105"",					
+    ""name"":""GZ"",					
+    ""email"":""info@test.mn"",					
+    ""phone"":""88614450""					
+    },					
+",
+,8,invoice_description,Yes,[.*]/string,255,Нэхэмжлэлийн утга /тусгай тэмдэгт ашиглаж болохгүй/,Order No1311 200.00,
+,9,enable_expiry,No,boolean,20,"Нэхэмжлэхийн хугацаа дуусах эсэх 
+true: Нэхэмжлэхийн хугацаа дуусна
+false: Нэхэмжлэхийн хугацаа дуусахгүй /QPay-д хандан хэр хугацааны дараа нэхэмжлэх цуцлагдахыг тохируулуулна/",false,
+,14,allow_partial,No,array,20,"Хэсэгчлэн төлбөр төлөхийн зөвшөөрсөн эсэх 
+true: Хувааж төлж болно
+false: Хувааж төлж болохгүй",false,
+,15,minimum_amount,No,decimal,20,Төлөх хамгийн бага дүн,null,
+,16,allow_exceed,No,boolean,20,"Төлбөрийн дүнг өөрчилж болох эсэх
+true: Өөрчилж болно
+false: Өөрчилж болохгүй",false,
+,17,maximum_amount,No,decimal,20,Төлөх хамгийн их дүн,null,
+,18,amount,No,decimal,20,Мөнгөн дүн,200,
+,19,callback_url,Yes,[.*]/string,255,Төлбөр төлсөгдсөн эсэх талаар мэдэгдэл авах URL,https://bd5492c3ee85.ngrok.io/payments,
+,20,sender_terminal_code,No,[.*]/string,45,Картын гүйлгээ хүлээн авах боломжтой банкнаас үүсгэж өгсөн терминал код,null,
+,21,sender_terminal_data,No,[.*]/string,100,Терминал кодын мэдээлэл,null,
+,22,allow_subscribe,No,boolean,20,"Автомат төлөлт зөвшөөрөх эсэх /картын гүйлгээнд хамаарна/
+true: Автоматаар төлнө
+false: Автоматаар төлөхгүй",false,
+,23,subscription_interval,No,[.*]/string,20,Автоматаар төлөгдөх хугацаа,1D,
+,24,subscription_webhook,No,[.*]/string,255,Автоматаар төлөгдсөн эсэх талаар мэдэгдэл авах URL,,
+,25,note,No,[.*]/string,1000,Тэмдэглэл,null,
+,27,transactions,No,array,,Мерчантын тодорхойлсон дансанд орлого хүлээн авна /Оператор эрхтэй байгууллага ашиглах/,"[
+        {
+            ""description"": ""test"",
+            ""amount"": ""100"",
+            ""accounts"": [
+                {
+                    ""account_bank_code"": ""050000"",
+                    ""account_name"": ""ganzul"",
+                    ""account_number"": ""5041323449"",
+                    ""iban_number"": ""MN020005005041323449""
+                    ""account_currency"": ""MNT"",
+                    ""is_default"": true
+                }
+            ]",
+,,,,,,,,
+,sender_branch_data,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,register,No,[.*]/string,20,Салбарын регистр,121232,
+,2,name,No,[.*]/string,100,Салбарын нэр,Баянзүрх салбар,
+,3,email,No,[.*]/string,255,Салбарын И-майл,sample@info.mn,
+,4,phone,No,[.*]/string,20,Салбарын утас,99119911,
+,5,address,No,object,,Хаяг,,
+,,,,,,,,
+,sender_staff_data,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,name,No,[.*]/string,100,Салбарын ажилтаны нэр,Zaya,
+,2,email,No,[.*]/string,255,Салбарын ажилтаны И мэйл,sample@info.mn,
+,3,phone,No,[.*]/string,20,Салбарын ажилтаны утас,99119911,
+,,,,,,,,
+,,,,,,,,
+,address,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,city,No,[.*]/string,100,Хот,Ulaanbaatar,
+,2,district,No,[.*]/string,100,Дүүрэг,Sukhbaatar,
+,3,street,No,[.*]/string,100,Гудамж,Olimp street,
+,4,building,No,[.*]/string,100,Барилга,Ayud,
+,5,address,No,[.*]/string,100,Хаяг,1505,
+,6,zipcode,No,[.*]/string,20,Зип код,14240,
+,7,longitude,No,[.*]/string,20,Уртраг,47.91503215,
+,8,latitude,No,[.*]/string,20,Өргөрөг,106.9182065,
+,,,,,,,,
+,invoice_receiver_data,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,register,No,[.*]/string,20,Нэхэмжлэх хүлээж авагчийн регистр,UZ96021105,
+,2,name,No,[.*]/string,100,Нэхэмжлэх хүлээж авагчийн нэр,Ganzul,
+,3,email,No,[.*]/string,255,Нэхэмжлэх хүлээн авагчийн И мэйл,test@gmail.com,
+,4,phone,No,[.*]/string,20,Нэхэмжлэх хүлээн авагчийн утас,88614450,
+,5,address,No,object,,Нэхэмжлэх хүлээн авагчийн хаяг,object,
+,,,,,,,,
+,address,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,city,No,[.*]/string,100,Нэхэмжлэх хүлээн авагчийн хаяг,Ulaanbaatar,
+,2,district,No,[.*]/string,100,Нэхэмжлэх хүлээн авагчийн хаяг,Sukhbaatar,
+,3,street,No,[.*]/string,100,Нэхэмжлэх хүлээн авагчийн хаяг,Olimpiin gudamj,
+,4,building,No,[.*]/string,100,Нэхэмжлэх хүлээн авагчийн хаяг,Ayud tower,
+,5,address,No,[.*]/string,255,Нэхэмжлэх хүлээн авагчийн хаяг,1505,
+,6,zipcode,No,[.*]/string,20,Нэхэмжлэх хүлээн авагчийн хаяг,14240,
+,7,longitude,No,[.*]/string,20,Нэхэмжлэх хүлээн авагчийн хаяг,47.91503215,
+,8,latitude,No,[.*]/string,20,Нэхэмжлэх хүлээн авагчийн хаяг,106.9182065,
+,,,,,,,,
+,transactions[],,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,description,Yes,[.*]/string,100,Гүйлгээний утга,Тест төлбөр,
+,2,amount,Yes,decimal,20,Мөнгөн дүн,100,
+,3,accounts,No,array,,Банкны данс,"{
+                    ""account_bank_code"": ""050000"",
+                    ""account_name"": ""ganzul"",
+                    ""account_number"": ""5041323449"",
+                    ""iban_number"": ""MN020005005041323449""
+                    ""account_currency"": ""MNT"",
+                    ""is_default"": true
+                }",
+,,,,,,,,
+,accounts[],,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,account_bank_code,Yes,[.*]/string,valid(bank),Банкны кодууд,050000,
+,2,account_number,Yes,[.*]/string,100,Дансны дугаар,5041323449,
+,3,iban_number,Yes,[.*]/string,100,Iban данс,MN020005005041323449,
+,4,account_name,Yes,[.*]/string,100,Дансны нэр,Ganzul,
+,5,account_currency,Yes,[.*]/string,valid(currency),Валют,"bank codes, currency",
+,6,is_default,Yes,boolean,20,"Үндсэн данс эсэх 
+true: үндсэн данс
+false: үндсэн данс биш",false,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Response,,,,,,,
+,Д/д,Нэр,,Төрөл,Урт ихдээ,Тайлбар,Жишээ,
+,1,invoice_id,,[.*]/string,30,Нэхэмжлэх үүсгэсэний дараа манайхаас үүсгэгдэх төлбөрийн дугаар /Object id  /,d50f49f2-9032-4a74-8929-530531f28f63,
+,2,qr_text,,[.*]/string,600,QR-ийн текст,0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D,
+,3,qr_image,,[.*]/string,5000,Сайт дээр байршуулах бол QR image-ийг ашиглана,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAABmJLR0QA/wD/AP+gvaeTAAAa6UlEQVR4nO3dbXRU1bkH8P9MAgpJQF5NoJCAL6iIxaZgRQQNolZFCpXC9XahvSVQoSpKvaD2umyFamwpagsalBdrq4igtrhMVVAJapWIRQWlApJEQwAVhbwRkszcD6xqk5xJ9uzsvc95Jv/fWn5wZs4+e17ysM9znvOcUDQajYKISICw3xMgIlLFgEVEYjBgEZEYDFhEJAYDFhGJwYBFRGIwYBGRGAxYRCQGAxYRicGARURiMGARkRgMWEQkBgMWEYnBgEVEYjBgEZEYDFhEJAYDFhGJwYBFRGIkmxwsFAqZHC5uKt2eTc7R1P50u1R7jW2q47Xq2DrvT/c7MLX/tmxnc/86n5Pq9y3hb1MFV1hEJAYDFhGJwYBFRGIwYBGRGEaT7l5s3vZQJZHY9DWuE7cqY+kmuIOQrFd5L7rfgc7npPqd6MxbZRyv7VTnZOq3qsLvv0tdXGERkRgMWEQkBgMWEYlhPYfVlMmiQVPb6eYhTOaQVNgswNSlMwfdz9LUa2zTzVE25brYMwi/p9ZwhUVEYjBgEZEYDFhEJAYDFhGJ4TzpHkQmCxJNdS9wXSDo99X8fhfv6o6t8tsxecLI7+/Jb1xhEZEYDFx.......,
+,4,qPay_shortUrl,,[.*]/string,50,"QPay богино URL/бүх банкны апп орсон, смс илгээхэд ашиглаж болно/",https://s.qpay.mn/z1lKnIO5T,
+,5,qPay_deeplink,,array,,Банкны апп-ууд тус бүрийн Deeplink," [
+        {
+            ""name"": ""Khan bank"",
+            ""description"": ""Хаан банк"",
+            ""logo"": ""https://qpay.mn/q/logo/khanbank.png"",
+            ""link"": ""khanbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""",
+,,,,,,,,
+,qPay_deeplink [],,,,,,,
+,Д/д,Нэр,,Төрөл,Урт ихдээ,Тайлбар,Жишээ,
+,1,name,,[.*]/string,50,Тухайн банкны нэр ,Khan bank,
+,2,description,,[.*]/string,50,Тайлбар,Хаан банк,
+,3,logo,,[.*]/string,50,Тухайн банкны лого,"https://qpay.mn/q/logo/khanbank.png""",
+,4,link,,[.*]/string,50,Тухайн банкны апп дуудагдах линк,khanbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D,
+,,,,,,,,
+,,,,,,,,
+,Request,,,,,,,Request cURL
+,"""{
+    """"invoice_code"""": """"TEST_INVOICE"""",
+    """"sender_invoice_no"""": """"123455678"""",
+    """"invoice_receiver_code"""": """"83"""",
+    """"sender_branch_code"""":""""BRANCH1"""",
+    """"invoice_description"""": """"Order No1311 200.00"""",
+    """"enable_expiry"""":""""false"""",
+    """"allow_partial"""": false,
+    """"minimum_amount"""": null,
+    """"allow_exceed"""": false,
+    """"maximum_amount"""": null,
+    """"amount"""": 200,
+    """"callback_url"""": """"https://bd5492c3ee85.ngrok.io/payments"""",
+    """"sender_staff_code"""": """"online"""",
+    """"sender_terminal_code"""": null,
+    """"sender_terminal_data"""":{
+                        """"name"""": null
+              },
+   """"allow_subscribe"""": true,
+    """"subscription_interval"""": """"1D"""",
+    """"subscription_webhook"""": """"http://localhost:1000"""",
+    """"note"""":null,
+    """"transactions"""": [
+        {
+            """"description"""": """"test"""",
+            """"amount"""": """"100"""",
+            """"accounts"""": [
+                {
+                    """"account_bank_code"""": """"050000"""",
+                    """"account_name"""": """"ganzul"""",
+                    """"account_number"""": """"5041323449"""",
+                    ''''iban_number'''':MN020005005041323449'''',
+                    """"account_currency"""": """"MNT"""",
+                    """"is_default"""": true,
+                }
+            ]
+        }
+    ],
+    """"invoice_receiver_data"""": {
+        """"register"""": """"UZ96021105"""",
+        """"name"""": """"Ganzul"""",
+        """"email"""": """"test@gmail.com"""",
+        """"phone"""": """"88614450""""
+    }
+ }""					",,,,,,,"curl --location --request POST 'https://merchant.qpay.mn/v2/invoice' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Cookie: 
+--data-raw '{
+    ""invoice_code"": ""TEST_INVOICE"",
+    ""sender_invoice_no"": ""123455678"",
+    ""invoice_receiver_code"": ""83"",
+    ""sender_branch_code"":""BRANCH1"",
+    ""invoice_description"": ""Order No1311 200.00"",
+    ""enable_expiry"":""false"",
+    ""allow_partial"": false,
+    ""minimum_amount"": null,
+    ""allow_exceed"": false,
+    ""maximum_amount"": null,
+    ""amount"": 200,
+    ""callback_url"": ""https://bd5492c3ee85.ngrok.io/payments?payment_id=12345678"",
+    ""sender_staff_code"": ""online"",
+    ""sender_terminal_code"": null,
+    ""sender_terminal_data"":{
+                        ""name"": null
+              },
+    ""allow_subscribe"": true,
+    ""subscription_interval"": ""1D"",
+    ""subscription_webhook"": ""http://localhost:1000"",
+    ""note"":null,
+    ""transactions"": [
+        {
+            ""description"": ""test"",
+            ""amount"": ""100"",
+            ""accounts"": [
+                {
+                    ""account_bank_code"": ""050000"",
+                    ""account_name"": ""ganzul"",
+                    ""account_number"": ""5041323449"",
+                   ""iban_number"": ""MN020005005041323449"",
+                    ""account_currency"": ""MNT"",
+                    ""is_default"": true,
+                    ""sender_terminal_code"": null,
+                }
+            ]
+        }
+    ],
+    ""invoice_receiver_data"": {
+        ""register"": ""UZ96021105"",
+        ""name"": ""Ganzul"",
+        ""email"": ""test@gmail.com"",
+        ""phone"": ""88614450""
+    },
+    ""lines"": [
+        {
+            ""tax_product_code"": ""6401"",
+            ""line_description"": "" Order No1311 200.00 ."",
+            ""line_quantity"": ""1.00"",
+            ""line_unit_price"": ""200.00"",
+            ""note"": ""-."",
+            ""discounts"": [
+                {
+                    ""discount_code"": ""NONE"",
+                    ""description"": "" discounts"",
+                    ""amount"": 10,
+                    ""note"": "" discounts""
+                }
+            ],
+            ""surcharges"": [
+                {
+                    ""surcharge_code"": ""NONE"",
+                    ""description"": ""Хүргэлтийн зардал"",
+                    ""amount"": 10,
+                    ""note"": "" Хүргэлт""
+                }
+            ],
+            ""taxes"": [
+                {
+                    ""tax_code"": ""VAT"",
+                    ""description"": ""НӨАТ"",
+                    ""amount"": 20,
+                    ""note"": "" НӨАТ""
+                }
+            ]
+        }
+    ]
+}'"
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,Response,,,,,,,
+,"{
+    ""invoice_id"": ""d50f49f2-9032-4a74-8929-530531f28f63"",
+    ""qr_text"": ""0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D"",
+    ""qr_image"": ""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"",
+    ""qPay_shortUrl"": ""https://s.qpay.mn/z1lKnIO5T"",
+    ""urls"": [
+        {
+            ""name"": ""Khan bank"",
+            ""description"": ""Хаан банк"",
+            ""logo"": ""https://qpay.mn/q/logo/khanbank.png"",
+            ""link"": ""khanbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""State bank"",
+            ""description"": ""Төрийн банк"",
+            ""logo"": ""https://qpay.mn/q/logo/statebank.png"",
+            ""link"": ""statebank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Xac bank"",
+            ""description"": ""Хас банк"",
+            ""logo"": ""https://qpay.mn/q/logo/xacbank.png"",
+            ""link"": ""xacbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Trade and Development bank"",
+            ""description"": ""TDB online"",
+            ""logo"": ""https://qpay.mn/q/logo/tdbbank.png"",
+            ""link"": ""tdbbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Most money"",
+            ""description"": ""МОСТ мони"",
+            ""logo"": ""https://qpay.mn/q/logo/most.png"",
+            ""link"": ""most://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""National investment bank"",
+            ""description"": ""Үндэсний хөрөнгө оруулалтын банк"",
+            ""logo"": ""https://qpay.mn/q/logo/nibank.jpeg"",
+            ""link"": ""nibank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Chinggis khaan bank"",
+            ""description"": ""Чингис Хаан банк"",
+            ""logo"": ""https://qpay.mn/q/logo/ckbank.png"",
+            ""link"": ""ckbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Capitron bank"",
+            ""description"": ""Капитрон банк"",
+            ""logo"": ""https://qpay.mn/q/logo/capitronbank.png"",
+            ""link"": ""capitronbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""Bogd bank"",
+            ""description"": ""Богд банк"",
+            ""logo"": ""https://qpay.mn/q/logo/bogdbank.png"",
+            ""link"": ""bogdbank://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        },
+        {
+            ""name"": ""qPay wallet"",
+            ""description"": ""qPay хэтэвч"",
+            ""logo"": ""https://s3.qpay.mn/p/e9bbdc69-3544-4c2f-aff0-4c292bc094f6/launcher-icon-ios.jpg"",
+            ""link"": ""qpaywallet://q?qPay_QRcode=0002010102121531279404962794049600022310027138152045734530349654031005802MN5904TEST6011Ulaanbaatar6244010712345670504test0721qWlrS8_zUpplFJmmfBGXc6304C66D""
+        }
+    ]
+}",,,,,,,

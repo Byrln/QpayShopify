@@ -1,0 +1,33 @@
+,,,,,,,,
+,"Төлбөрийг буцаах, цуцлах үед ашиглана.",,,,,,,
+,АНХААРУУЛГА! Картын гүйлгээний үед буцаах боломжтой,,,,,,,
+,,,,,,,,
+,Request,,,,,,,
+,Д/д,Нэр,Required,Утга,Урт ихдээ,Тайлбар,Жишээ,
+,1,payment_id,No,[.*]/string,100,Төлөгдсөн Payment ID-г Callback URL-аар авсаны дараа тухайн хэсэгт оруулж өгнө. /Картын гүйлгээ/,https://qpay.mn/payment/result?payment_id=8e25b4d5-fe5a-4d0f-b050-def68a82aaad,
+,2,note,No,[.*]/string,255,Тэмдэглэл,butsaalt,
+,,,,,,,,
+,Response,,,,,,,
+,Амжилттай үед,Http Response Code,200,Success,,,,
+,Амжилтгүй үед,Http Response Code,"400, 401, 403, 409, 422, 500",Error,,,,
+,,,,,,,,
+,,,,,,,,
+,Request Url,https://qpay.mn/payment/result?payment_id=8e25b4d5-fe5a-4d0f-b050-def68a82aaad,,,,,,Request cURL
+,,,,,,,,"curl --location --request DELETE 'https://merchant.qpay.mn/v2/payment/refund/8e25b4d5-fe5a-4d0f-b050-def68a82aaad' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Cookie: qpay_merchant_service.sid=s%3AlJD1O3i8U-GSSPZ56x0S6-xRjfhs9GoQ.cAS7vyr3mTBQmTLEy%2BAvCkfHzNDIwQLvlRzqLTqikZk; _4d45d=http://10.233.105.241:3000'"
+,Request Body,,,,,,,
+,"{
+    ""note"":""butsaalt""
+}",,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,"{
+    ""error"": ""PAYMENT_SETTLED"",
+    ""message"": ""PAYMENT_SETTLED""
+} ",,,,,,,

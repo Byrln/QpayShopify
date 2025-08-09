@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="mn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful - QPay</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .success-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 40px;
+      color: white;
+      animation: checkmark 0.6s ease-in-out;
+    }
+
+    @keyframes checkmark {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #1f2937;
+      margin-bottom: 10px;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .payment-details {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+
+    .payment-details h3 {
+      color: #374151;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .detail-row:last-child {
+      margin-bottom: 0;
+      padding-top: 15px;
+      border-top: 2px solid #e5e7eb;
+      font-weight: 600;
+    }
+
+    .detail-label {
+      color: #6b7280;
+    }
+
+    .detail-value {
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .amount {
+      font-size: 24px;
+      font-weight: bold;
+      color: #059669;
+    }
+
+    .transaction-id {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 30px;
+    }
+
+    .transaction-id h4 {
+      color: #1e40af;
+      margin-bottom: 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .transaction-id code {
+      background: #dbeafe;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: #1e40af;
+      word-break: break-all;
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      min-width: 140px;
+    }
+
+    .btn-primary {
+      background: #1e40af;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+      transform: translateY(-2px);
+    }
+
+    .receipt-info {
+      background: #fef3c7;
+      border: 1px solid #fbbf24;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #92400e;
+    }
+
+    .mongolian-text {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .success-container {
+        padding: 20px;
+        margin: 10px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="success-container">
+    <div class="success-icon">✓</div>
+
+    <h1>Төлбөр амжилттай!</h1>
+    <p class="subtitle">Таны захиалга баталгаажиж, төлбөр хүлээн авлаа</p>
+
+    <div class="payment-details">
+      <h3>Төлбөрийн хураангуй</h3>
+
+      <div class="detail-row">
+        <span class="detail-label">Захиалгын дугаар:</span>
+        <span class="detail-value" id="orderNumber">#1001</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Төлбөрийн арга:</span>
+        <span class="detail-value">QPay</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Гүйлгээний огноо:</span>
+        <span class="detail-value" id="transactionDate">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Төлсөн дүн:</span>
+        <span class="detail-value amount" id="amount">$99.99</span>
+      </div>
+    </div>
+
+    <div class="transaction-id">
+      <h4>Гүйлгээний дугаар</h4>
+      <code id="transactionId">QPAY-2025-XXXXXXXX</code>
+    </div>
+
+    <div class="actions">
+      <a href="https://satori.mn/collections/all-nicotine-pouches" class="btn btn-secondary"
+        id="continueShoppingBtn">Худалдан авалт үргэлжлүүлэх</a>
+    </div>
+
+    <div class="receipt-info">
+      📧 Баримт таны имэйл хаяг руу илгээгдлээ.<br>
+      📱 Энэ гүйлгээг QPay аппаасаа харах боломжтой.
+    </div>
+
+    <div class="mongolian-text">
+      <strong>Монгол хэл:</strong><br>
+      Таны төлбөр амжилттай хийгдлээ. Захиалгын дэлгэрэнгүй мэдээллийг имэйл хаягаар илгээлээ.
+    </div>
+  </div>
+
+  <script>
+    // Get order details from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('orderId') || 'DEMO-12345';
+    const amount = parseFloat(urlParams.get('amount')) || 99.99;
+    const currency = urlParams.get('currency') || 'USD';
+    const orderNumber = urlParams.get('orderNumber') || '#1001';
+    const transactionId = urlParams.get('transactionId') || 'QPAY-2025-' + Date.now().toString().slice(-8);
+
+    // Display order info
+    document.getElementById('orderNumber').textContent = orderNumber;
+    document.getElementById('amount').textContent =
+      currency === 'MNT' ? '₮' + amount.toLocaleString() : '$' + amount.toFixed(2);
+    document.getElementById('transactionId').textContent = transactionId;
+
+    // Set current date
+    const now = new Date();
+    document.getElementById('transactionDate').textContent = now.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    // Set up action buttons
+    document.getElementById('viewOrderBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      // Redirect to order details page
+      window.location.href = `/orders/${orderId}`;
+    });
+
+    document.getElementById('continueShoppingBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      // Redirect to shop homepage
+      window.location.href = '/';
+    });
+
+    // Auto-redirect after 30 seconds (optional)
+    setTimeout(function () {
+      const shouldRedirect = confirm('Худалдан авалтаа үргэлжлүүлэх үү?');
+      if (shouldRedirect) {
+        window.location.href = '/';
+      }
+    }, 30000);
+
+    // Send confirmation to parent window if opened in popup
+    if (window.opener) {
+      window.opener.postMessage({
+        type: 'payment_success',
+        orderId: orderId,
+        amount: amount,
+        transactionId: transactionId
+      }, '*');
+    }
+
+    // Track successful payment (for analytics)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'purchase', {
+        transaction_id: transactionId,
+        value: amount,
+        currency: currency,
+        items: [{
+          item_id: orderId,
+          item_name: 'Order ' + orderNumber,
+          quantity: 1,
+          price: amount
+        }]
+      });
+    }
+  </script>
+</body>
+
+</html>

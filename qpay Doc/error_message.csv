@@ -1,0 +1,68 @@
+,,,
+,STATUS CODE,Description,Тайлбар
+,200,SUCCESS,Амжилттай
+,400,VALIDATION_ERROR,Параметр буруу илгээсэн үед гарах алдаа
+,401,UNAUTHORIZED_ERROR,Нэвтрэлгүй дуудсан үед гарах алдаа
+,403,FORBIDDEN_ERROR,Хандах эрх хүрээгүй үед гарах алдаа
+,409,UNIQUE_ERROR,Бүртгэлийн мэдээлэл давхацсан үед гарах алдаа
+,422,NOT_FOUND_ERROR,Мэдээлэл олдоогүй үед гарах алдаа
+,500,INTERNAL_ERROR,Системийн дотоод алдаа
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,KEY,MON,ENG
+,ACCOUNT_BANK_DUPLICATED,Банкны данс давхацсан байна,Bank account is already registered!
+,ACCOUNT_SELECTION_INVALID,Дансны сонголт буруу,Account selection is invalid!
+,AUTHENTICATION_FAILED,Нэвтрэх нэр	 нууц үг буруу,Your username and password are wrong!
+,BANK_ACCOUNT_NOTFOUND,Банкны данс олдсонгүй,Bank account is not found!
+,BANK_MCC_ALREADY_ADDED,Банкны MCC кодыг нэмчихсэн байна,Bank MCC is already added!
+,BANK_MCC_NOT_FOUND,Банкны MCC код олдсонгүй,Bank MCC is not found!
+,CARD_TERMINAL_NOTFOUND,Картын терминал бүртгэлгүй байна,Card terminal is not registered!
+,CLIENT_NOTFOUND,Клиентийн бүртгэл олдсонгүй,Client is not registered!
+,CLIENT_USERNAME_DUPLICATED,Клиентийн хэрэглэгчийн нэр давхацсан,Client username is already exist!
+,CUSTOMER_DUPLICATE,Харилцагчийн регистрийн дугаар давхацсан байна!,Customer register duplicated!
+,CUSTOMER_NOTFOUND,Харилцагч бүртгэгдээгүй байна!,Customer not registered!
+,CUSTOMER_REGISTER_INVALID,Харилцагч регистрийн дугаар байна!,Customer register is wrong!
+,EBARIMT_CANCEL_NOTSUPPERDED,qPay үйлчилгээ и-баримтыг цуцлах боломжгүй байна.,qPay service eBarimt unregister function not supported
+,EBARIMT_NOT_REGISTERED,и-Баримт үүсээгүй байна.,eBarimt not registered!
+,EBARIMT_QR_CODE_INVALID,Төлбөр хүлээн авагчийн илгээсэн и-баримт-ын QR код буруу байна.,eBarimt QR code invalid by merchant
+,INFORM_NOTFOUND,Мэдэгдэлийн хаяг олдсонгүй,Inform is not found!
+,INPUT_CODE_REGISTERED,Input code бүртгэгдсэн байна,Input code is already registered!
+,INPUT_NOTFOUND,Input олдсонгүй,Input is already registered!
+,INVALID_AMOUNT,Үнийн дүн буруу,Amount is invalid!
+,INVALID_OBJECT_TYPE,object_type буруу,Object type is invalid!
+,INVOICE_ALREADY_CANCELED,Нэхэмжлэл цуцлагдсан байна,Invoice is already cancelled!
+,INVOICE_CODE_INVALID,Нэхэмжлэлийн код буруу,Invoice code is wrong!
+,INVOICE_CODE_REGISTERED,Нэхэмжлэлийн код бүртгэгдсэн байна,Invoice code is already registered!
+,INVOICE_LINE_REQUIRED,Нэхэмжлэлийн мөр шаардлагатай,Invoice line is required!
+,INVOICE_NOTFOUND,Нэхэмжлэл олдсонгүй,Invoice is not found!
+,INVOICE_PAID,Нэхэмжлэл төлөгдсөн,Invoice is paid!
+,INVOICE_RECEIVER_DATA_ADDRESS_REQUIRED,Нэхэмжлэл хүлээн авагчийн хаягийн мэдээлэл шаардлагатай,Invoice receiver address is required!
+,INVOICE_RECEIVER_DATA_EMAIL_REQUIRED,Нэхэмжлэл хүлээн авагчийн имэйл хаяг шаардлагатай,Invoice receiver email is required!
+,INVOICE_RECEIVER_DATA_PHONE_REQUIRED,Нэхэмжлэл хүлээн авагчийн утасны дугаар шаардлагатай,Invoice receiver phone is required!
+,INVOICE_RECEIVER_DATA_REQUIRED,Нэхэмжлэл хүлээн авагчийн мэдээлэл шаардлагатай,Invoice receiver data is required!
+,MAX_AMOUNT_ERR,Үнийн дүн хэт их байна,Amount is over than max value!
+,MCC_NOTFOUND,MCC код олдсонгүй,MCC is not found!
+,MERCHANT_ALREADY_REGISTERED,Мерчантын бүртгэл давхацсан,Merchant is already registered!
+,MERCHANT_INACTIVE,Мерчант идэвхигүй,Merchant is inactive!
+,MERCHANT_NOTFOUND,Мерчант бүртгэлгүй байна,Merchant is not registered!
+,MIN_AMOUNT_ERR,Үнийн дүн хэт бага байна,Amount is less than minimum value!
+,NO_CREDENDIALS,Хандах эрхгүй байна. Нэвтрэнэ үү.,Your credential is invalid. Please login!
+,OBJECT_DATA_ERROR,object_data алдаа,Object data is wrong!
+,P2P_TERMINAL_NOTFOUND,P2P терминал бүртгэлгүй байна,P2P terminal is not registered!
+,PAYMENT_ALREADY_CANCELED,Төлбөр цуцлагдсан байна,Payment is already cancelled!
+,PAYMENT_NOT_PAID,Төлбөр төлөлт хийгдээгүй байна,Payment has not paid!
+,PAYMENT_NOTFOUND,Төлбөр олдсонгүй,Payment is not found!
+,PERMISSION_DENIED,Хандах эрх хүрэхгүй байна,Your access permission is not allowed!
+,QRACCOUNT_INACTIVE,QR данс идэвхигүй,QR account is inactive!
+,QRACCOUNT_NOTFOUND,QR данс олдсонгүй,QR account is not found!
+,QRCODE_NOTFOUND,QR код олдсонгүй,QR code is not found!
+,QRCODE_USED,QR код ашиглагдаж байна,QR code is already used!
+,SENDER_BRANCH_DATA_REQUIRED,Илгээгчийн салбарын мэдээлэл шаардлагатай,Sender branch data is required!
+,TAX_LINE_REQUIRED,Татварын мөр шаардлагатай,Tax line is required!
+,TAX_PRODUCT_CODE_REQUIRED,Татварын бүтээгдэхүүний код шаардлагатай,Tax product code is required!
+,TRANSACTION_NOT_APPROVED,Гүйлгээний мөр зөвшөөрөгдөөгүй байна,Transaction line is not approved!
+,TRANSACTION_REQUIRED,Гүйлгээний мөр шаардлагатай байна,Transaction line is required!

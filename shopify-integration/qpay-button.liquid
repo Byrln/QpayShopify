@@ -1,0 +1,72 @@
+<!-- QPay Button Integration for Shopify Product Pages -->
+<!-- Add this code to your product-form.liquid or product.liquid template -->
+
+<div class="qpay-payment-section" style="margin-top: 20px;">
+  <button 
+    type="button" 
+    class="qpay-payment-btn"
+    onclick="initiateQPayPayment()"
+    style="
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    "
+    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.3)'"
+    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+  >
+    🏦 QPay-ээр төлөх
+  </button>
+</div>
+
+<script>
+function initiateQPayPayment() {
+  // Get product information
+  const productData = {
+    id: {{ product.id }},
+    title: {{ product.title | json }},
+    price: {{ product.selected_or_first_available_variant.price | money_without_currency }},
+    variant_id: {{ product.selected_or_first_available_variant.id }},
+    handle: {{ product.handle | json }},
+    image: {{ product.featured_image | image_url: width: 300 | json }},
+    quantity: document.querySelector('input[name="quantity"]')?.value || 1,
+    shop_domain: {{ shop.domain | json }}
+  };
+
+  // Create checkout URL for return after payment
+  const checkoutUrl = `https://{{ shop.domain }}/cart/{{ product.selected_or_first_available_variant.id }}:${productData.quantity}`;
+  
+  // Redirect to our Vercel payment page with product data
+  const paymentUrl = new URL('https://q-pay-shopify.vercel.app/payment');
+  paymentUrl.searchParams.set('product', JSON.stringify(productData));
+  paymentUrl.searchParams.set('return_url', checkoutUrl);
+  paymentUrl.searchParams.set('shop_domain', productData.shop_domain);
+  
+  window.location.href = paymentUrl.toString();
+}
+</script>
+
+<style>
+.qpay-payment-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.qpay-payment-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .qpay-payment-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+</style>

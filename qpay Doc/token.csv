@@ -1,0 +1,35 @@
+,,,,,,,
+,,,,,,,
+,Authorization хэсгийг Qpay-ээс үүсгэж өгсөн Username Password-ийн дагуу токен авахад ашиглана.,,,,,,
+,АНХААРУУЛГА! Токен timestamp ба хугацаа дуусахаас өмнө ойр ойрхон олон дахин токен авч болохгүй.,,,,,,
+,,,,,,,
+,,,,,,,
+,USERNAME: TEST_MERCHANT                                      PASSWORD: 123456,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,Response,,,,,,
+,Д/д,Нэр,Төрөл,Урт ихдээ,Тайлбар,Жишээ,
+,1,token_type,[.*]/string,50,Токены төрөл,bearer,
+,2,refresh_expires_in,date,50,refresh токены дуусах хугацаа /timestamp/,1646967792,
+,3,refresh_token,[.*]/string,,access токен сунгахдаа ашиглана ,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJiOGU4NDg5LWQ1YmUtNGQ5ZC05YWQxLTc2YzcwNjQxNTg3ZSIsInNlc3Npb25fc2VjcmV0IjoiJDJiJDEwJENNSGlQUmY2R2I3N2hnSUx5NzhHZi5uLmhDVWR5SW0xR3ZTbDNZbFpEQjJicUE0OXZaNUZxIiwiaWF0IjoxNjQ2ODgxMzkyLCJleHAiOjMyOTM4NjM1ODR9.t_jsDvbA-OvexiNJtrEJDq5rem42IyB62fQyjHC3uiQ,
+,4,access_token,[.*]/string,,Хандах эрх буюу token,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8,
+,5,expires_in,date,50,Access токены дуусах хугацаа /timestamp/,1646967792,
+,6,scope,[.*]/string,50,Хамрах хүрээ,get_token,
+,7,not-before-policy,[.*]/string,50,Өмнөх токеноо хүчингүй болгож болзошгүйг анхааруулна ,0,
+,8,session_state,[.*]/string,50,Токен авсан төлөв,prod,
+,,,,,,,
+,,,,,,,
+,"{
+    ""token_type"": ""bearer"",
+    ""refresh_expires_in"": 1646967792,
+    ""refresh_token"": ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJiOGU4NDg5LWQ1YmUtNGQ5ZC05YWQxLTc2YzcwNjQxNTg3ZSIsInNlc3Npb25fc2VjcmV0IjoiJDJiJDEwJENNSGlQUmY2R2I3N2hnSUx5NzhHZi5uLmhDVWR5SW0xR3ZTbDNZbFpEQjJicUE0OXZaNUZxIiwiaWF0IjoxNjQ2ODgxMzkyLCJleHAiOjMyOTM4NjM1ODR9.t_jsDvbA-OvexiNJtrEJDq5rem42IyB62fQyjHC3uiQ"",
+    ""access_token"": ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8"",
+    ""expires_in"": 1646967792,
+    ""scope"": ""get_token"",
+    ""not-before-policy"": ""0"",
+    ""session_state"": ""prod""
+}",,,,,,"curl --location --request POST 'https://merchant.qpay.mn/v2/auth/token' \
+--header 'Authorization: Basic R1pfVEVTVDpXQkRVenk4bg==' \
+--header 'Cookie: qpay_merchant_service.sid=s%3AlJD1O3i8U-GSSPZ56x0S6-xRjfhs9GoQ.cAS7vyr3mTBQmTLEy%2BAvCkfHzNDIwQLvlRzqLTqikZk; _4d45d=http://10.233.105.241:3000' \
+--data-raw ''"

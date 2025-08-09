@@ -1,0 +1,93 @@
+,,,,,,,,,
+,API,,Sandbox Address,Production Address,Authontication type,Method type,Body,Тайлбар,Жишээ
+,Auth,token,https://merchant-sandbox.qpay.mn/v2/auth/token,https://merchant.qpay.mn/v2/auth/token,BASIC AUTH,POST,Хоосон,API-руу хандах токен авахад ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/auth/token' \
+--header 'Authorization: Basic VEVTVF9NRVJDSEFOVDoxMjM0NTY='
+--data-raw ''"
+,,refresh,https://merchant-sandbox.qpay.mn/v2/auth/refresh,https://merchant.qpay.mn/v2/auth/refresh,BEARER TOKEN,POST,Хоосон,Access Token-ий хугацаа дуусахад хугацааг дахин сунгахад ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/auth/refresh' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJmZDNiYzQ3ZC0xNjAwLTQwYzUtYWFhOC0zNTZmNDMzNmEyODQiLCJzZXNzaW9uX2lkIjoiWVZTNU9VUDI5THhtQ3dRM1B4amNyYml3QUpNWjFlRUkiLCJpYXQiOjE2NDg0NTgyMjEsImV4cCI6MzI5NzAwMjg0Mn0.oJDNZVwVbCIKnuNu1B-P6zppsLR5A9MHcaCa0xb-hBE'"
+,Invoice,create,https://merchant-sandbox.qpay.mn/v2/invoice,https://merchant.qpay.mn/v2/invoice,BEARER TOKEN,POST,Жишээг эндээс үзнэ үү ,Нэхэмжлэл үүсгэхэд ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/invoice' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--data-raw '{
+    ""invoice_code"": ""TEST_INVOICE"",
+    ""sender_invoice_no"": ""12345678"",
+    ""invoice_receiver_code"": ""83"",
+    ""sender_branch_code"":""BRANCH1"",
+    ""invoice_description"": ""Order No1311 200.00"",
+    ""enable_expiry"":""false"",
+    ""allow_partial"": false,
+    ""minimum_amount"": null,
+    ""allow_exceed"": false,
+    ""maximum_amount"": null,
+    ""amount"": 200,
+    ""callback_url"": ""https://bd5492c3ee85.ngrok.io/payments?payment_id=12345678"",
+    ""sender_staff_code"": ""online"",
+    ""note"":null,
+    ""invoice_receiver_data"": {
+        ""register"": ""UZ96021105"",
+        ""name"": ""Ganzul"",
+        ""email"": ""test@gmail.com"",
+        ""phone"": ""88614450""
+    },
+    ""lines"": [
+"
+,,create simple,https://merchant-sandbox.qpay.mn/v2/invoice,https://merchant.qpay.mn/v2/invoice,BEARER TOKEN,POST,Жишээг эндээс үзнэ үү ,Нэхэмжлэлийг хялбарчилж үүсгэхэд ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/invoice' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--data-raw '{
+    ""invoice_code"": ""TEST_INVOICE"",
+    ""sender_invoice_no"": ""1234567"",
+    ""invoice_receiver_code"": ""terminal"",
+    ""invoice_description"":""test"",
+    ""sender_branch_code"":""SALBAR1"",
+    ""amount"":100,
+    ""callback_url"":""https://bd5492c3ee85.ngrok.io/payments?payment_id=1234567""
+}'"
+,,cancel,https://merchant-sandbox.qpay.mn/v2/invoice/:invoice_id,https://merchant.qpay.mn/v2/invoice/:invoice_id,BEARER TOKEN,DELETE,Жишээг эндээс үзнэ үү ,Нэхэмжлэлийг цуцлахад ашиглана,"curl --location --request DELETE 'https://merchant.qpay.mn/v2/invoice/679ab665-65df-4fa2-b816-c4a6c0f71453' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \"
+,Payment,get,https://merchant-sandbox.qpay.mn/v2/payment,https://merchant.qpay.mn/v2/payment,BEARER TOKEN,GET,Жишээг эндээс үзнэ үү ,Төлбөрийн мэдээлэл авахад ашиглана,"curl --location --request GET 'https://merchant.qpay.mn/v2/payment/8e25b4d5-fe5a-4d0f-b050-def68a82aaad' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' "
+,,check,https://merchant-sandbox.qpay.mn/v2/payment/check,https://merchant.qpay.mn/v2/payment/check,BEARER TOKEN,POST,Жишээг эндээс үзнэ үү ,Төлбөр төлөгдсөн эсэхийг шалгахад ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/payment/check' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--data-raw '{
+ ""object_type"": ""INVOICE"",
+ ""object_id""  : ""d50f49f2-9032-4a74-8929-530531f28f63"",
+ ""offset""     : {
+     ""page_number"": 1,
+     ""page_limit"" : 100
+   }
+}'"
+,,cancel,https://merchant-sandbox.qpay.mn/v2/payment/cancel,https://merchant.qpay.mn/v2/payment/cancel,BEARER TOKEN,DELETE,Жишээг эндээс үзнэ үү ,"Төлбөрийг буцаах, цуцлах үед ашиглана.
+- Картын гүйлгээний үед л буцаах боломжтой","curl --location --request DELETE 'https://merchant.qpay.mn/v2/payment/cancel/493622150113497' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    ""callback_url"":""https://qpay.mn/payment/result?payment_id=493622150113497"",
+    ""note"":""butsaalt""
+}'"
+,,refund,https://merchant-sandbox.qpay.mn/v2/payment/refund,https://merchant.qpay.mn/v2/payment/refund,BEARER TOKEN,DELETE,Жишээг эндээс үзнэ үү ,"Төлбөрийг буцаах, цуцлах үед ашиглана.","curl --location --request DELETE 'https://merchant.qpay.mn/v2/payment/refund/8e25b4d5-fe5a-4d0f-b050-def68a82aaad' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8'"
+,,list,https://merchant-sandbox.qpay.mn/v2/payment/list,https://merchant.qpay.mn/v2/payment/list,BEARER TOKEN,POST,Жишээг эндээс үзнэ үү ,Төлбөрийн жагсаалтыг авахад ашиглана,"curl --location --request POST 'https://merchant.qpay.mn/v2/payment/list' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--data-raw '{
+""object_type"":""INVOICE"",
+""object_id"":""TEST_INVOICE"",
+""start_date"": ""2021-09-06 00:00:01"",
+""end_date"": ""2021-09-06 23:59:59"",
+""offset"" : {
+""page_number"": 1,
+""page_limit"" : 1000
+}"
+,ebarimt,create,https://merchant-sandbox.qpay.mn/v2/ebarimt_v3/create,https://merchant.qpay.mn/v2/ebarimt_v3/create,BEARER TOKEN,POST,Жишээг эндээс үзнэ үү ,И баримт үүсгэх,"curl --location --request POST 'https://merchant.qpay.mn/v2/ebarimt/create' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  ""payment_id"": ""493622150113497"",
+  ""ebarimt_receiver_type"": ""CITIZEN""
+}
+'"
+,,cancel,https://merchant-sandbox.qpay.mn/v2/ebarimt_v3/679ab665-65df-4fa2-b816-c4a6c0f71453,https://merchant.qpay.mn/v2/ebarimt_v3/679ab665-65df-4fa2-b816-c4a6c0f71453,BEARER TOKEN,DELETE,Жишээг эндээс үзнэ үү ,И баримт цуцлах,"curl --location --request DELETE 'https://merchant.qpay.mn/v2/ebarimt/679ab665-65df-4fa2-b816-c4a6c0f71453' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJiYjhlODQ4OS1kNWJlLTRkOWQtOWFkMS03NmM3MDY0MTU4N2UiLCJzZXNzaW9uX2lkIjoiWXlKNmNwRFM1VnZ4Rm8wdDA5U1hRbnhNeGNucFNOSU8iLCJpYXQiOjE2NDY4ODEzOTIsImV4cCI6MzI5Mzg0OTE4NH0._C6lwwyt19Lj6gTNDbnwT0shjao-oKameyc9srQaAY8' \
+--header 'Cookie: qpay_merchant_service.sid=s%3AlJD1O3i8U-GSSPZ56x0S6-xRjfhs9GoQ.cAS7vyr3mTBQmTLEy%2BAvCkfHzNDIwQLvlRzqLTqikZk'"
